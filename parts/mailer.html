@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <style>
+            .example3 .navbar-brand {
+                height: 80px;
+            }
+
+            .example3 .nav >li >a {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            .example3 .navbar-toggle {
+                padding: 10px;
+                margin: 25px 15px 25px 0;
+            }
+
+            .navbar-inverse {
+                background-color: rgb(0,74,152);
+                border-color: #000000;
+            }
+            /*            #img{
+                            width: 50%;
+                        }*/
+            .wrap {
+                margin: auto;
+                position: absolute;
+                top: 0; left: 0; bottom: 0; right: 0;
+                height: 50px;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="example3">
+                        <nav class="navbar navbar-inverse navbar-static-top">
+                            <div class="container">
+                                <div class="navbar-header">
+                                    <a class="navbar-brand" href="index.php"><img id="img" width="125px" class="img-responsive" src="https://agenda.dentalia.com.mx/images/logo_dentalia_blanco.png"></a>
+                                </div>
+                                <div id="navbar3" class="navbar-collapse collapse">
+
+                                </div>
+                                <!--/.nav-collapse -->
+                            </div>
+                            <!--/.container-fluid -->
+                        </nav>
+                    </div>
+                    <p>Asunto: Confirmación de Cita en dentalia</p>
+                    <span>Hola <b>{patname}</b>,</span>
+                    <p>Tu cita en Dentalia ® {nombreclinic} ha sido agendada para el día {fecha}, en un horario de {horario}.</p>
+                    <p>
+                        Dirección:</p>
+                    <p>
+                        {dirclinic}
+                    </p>
+                    <!--                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.6310062287644!2d-99.16397678501897!3d19.428342786886844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff3aaaaaaaab%3A0x9df32955f9e2b40b!2sDentalia!5e0!3m2!1sen!2smx!4v1490319328054" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+                    <p>
+                        Te recomendamos agregarla a tu calendario: <a href="https://www.google.com/calendar/event?eid=MjAxNzA0MTNfNjBvMzBvOWxjOG8zMGMxZzYwbzMwZHI1NjQgZW4udXNhI2hvbGlkYXlAdg">Agregar</a>
+                    </p>
+                    <p>
+                        Si necesitas hacer algún cambio, por favor, llama al <a href="tel:018000033682">01.800.003.3682</a> o contáctanos en nuestro chat en www.dentalia.mx donde te ayudaremos con gusto.
+                    </p>
+                    <h4>
+                        En Dentalia®, queremos verte sonreír ®
+                    </h4>
+                    <br />
+                    <!--                    <div class="wrap">
+                                            <a href="javascript:cal_single.download('Awesome Day')">Event</a>
+                                        </div>-->
+                </div>
+            </div>
+        </div>
+
+        <!--        <div>{msj}</div>-->
+        <!-- Latest compiled and minified JavaScript -->
+        <script type="text/javascript" src="https://rawgithub.com/nwcell/ics.js/master/ics.deps.min.js"></script>
+        <script type="text/javascript" src="https://rawgithub.com/nwcell/ics.js/master/demo/demo.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+</html>

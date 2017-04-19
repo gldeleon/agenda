@@ -1,0 +1,53 @@
+/* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+#mapa {
+    height: 450px;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /*    background-image: url("../images/pattern.jpg");*/
+
+}
+
+
+.example3 .navbar-brand {
+    height: 80px;
+}
+
+.example3 .nav >li >a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.example3 .navbar-toggle {
+    padding: 10px;
+    margin: 25px 15px 25px 0;
+}
+
+.navbar-inverse {
+    background-color: rgb(0,74,152);
+    border-color: #000000;
+}
+
+div.ui-datepicker{
+    font-size: 20px;
+    width: 100%;
+}
+
+.altura{
+    height: 150px;
+}
+
+.ui-datepicker-trigger{
+    border:none;
+    background:none;
+}
+/*div.container {
+    width: 100%;
+}*/
+
+.acomoda{
+    height: 200px;
+}
