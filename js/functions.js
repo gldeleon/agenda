@@ -7,28 +7,55 @@
 $(document).ready(function () {
 
     $('#table-horarios').DataTable({
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ resultados por página",
+            "zeroRecords": "No hay datos para mostrar",
+            "info": "Página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay datos disponibles",
+            "infoFiltered": "(filtrado de _MAX_ resultados totales)",
+            "search": "Buscar",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Sig.",
+                "previous": "Ant."
+            }
+        },
         "responsive": true,
         "bLengthChange": false,
         "pageLength": 10,
         "bDestroy": true
     });
 
-
     $("#estados").change(function () {
         //var edoid = $("#estados option:selected").val();
         var edoid = $(this).val();
         //alert(edoid);
-        traeclinic(edoid);
+        if (edoid !== "") {
+            traeclinic(edoid);
+        } else {
+            alert('Debes seleccionar un estado');
+        }
+
     });
 
     $("#clinica").change(function () {
         var cliid = $("#clinica option:selected").val();
-        traeEspecialidad(cliid);
+        if (cliid !== "") {
+            traeEspecialidad(cliid);
+        } else {
+            alert('Debes seleccionar una clinica');
+        }
     });
 
     $("#especialidadSelect").change(function () {
         var esp_id = $(this).val(); //option:selected
-        traetrts(esp_id);
+
+        if (esp_id !== "") {
+            traetrts(esp_id);
+        } else {
+            alert('Debes seleccionar una especialidad');
+        }
     });
 
     $('#datepickerform').datetimepicker({
@@ -47,6 +74,10 @@ $(document).ready(function () {
 
 
 });
+
+//function traeClinicasdemapa(edoid) {
+//    traeclinic(edoid);
+//}
 
 function validate(evt) {
     var theEvent = evt || window.event;
@@ -115,25 +146,19 @@ $(function () {
                                 "info": "Página _PAGE_ de _PAGES_",
                                 "infoEmpty": "No hay datos disponibles",
                                 "infoFiltered": "(filtrado de _MAX_ resultados totales)",
-                                "search": "Buscar"
+                                "search": "Buscar",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Sig.",
+                                    "previous": "Ant."
+                                }
                             },
                             "responsive": true,
                             "bLengthChange": false,
                             "pageLength": 10,
                             "bDestroy": true
                         });
-
-//                        $('#table-horarios').DataTable({
-//                            "responsive": true,
-//                            "pageLength": 10
-//                        });
-//                            var inte = 1;
-//                            if (inte == 1) {
-//                                datatab();
-//                                inte++;
-//                            }
-
-                        //$('#estado').html(response).fadeIn();
                     }
                 });
 
@@ -276,24 +301,34 @@ function traeEspecialidad(datos) {
             });
             var infowindow = new google.maps.InfoWindow();
             var marker, i;
-
+            var pinIcon = new google.maps.MarkerImage(
+                    'images/Señaladores_Azul_c.png',
+                    null, /* size is determined at runtime */
+                    null, /* origin is 0,0 */
+                    null, /* anchor is bottom center of the scaled image */
+                    new google.maps.Size(20, 38)
+                    );
             for (i = 0; i < marcadores.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     map: map,
                     title: marcadores[i][0],
-                    //icon: 'https://www.dentalia.mx/templates/dentaliav2/img/clinica-dental-en-mexico-dentalia-logo.png',
+                    icon: pinIcon,
                     //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
                     cursor: 'default',
                     draggable: false,
                     animation: google.maps.Animation.DROP
                 });
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                     return function () {
+                        //alert(marcadores[i][3]);
+                        //traeClinicasdemapa(marcadores[i][3]);
+                        //traeclinic(marcadores[i][3]);
                         infowindow.setContent(marcadores[i][0]);
                         infowindow.open(map, marker);
-                        //zoom: 10;
-                        //map.setZoom(7);
+//                        window.setTimeout(function () {
+//                            map.panTo(marker.getPosition());
+//                        }, 3000);
                     }
                 })(marker, i));
 
@@ -322,6 +357,120 @@ function traeEspecialidad(datos) {
 }
 
 
+
+//function traeclinic(data) {
+//    //alert(id);
+//    var latlanid = data.split('-');
+//
+//    var lat = latlanid[0];
+//    var lng = "-" + latlanid[1];
+//    var id = latlanid[2];
+//
+////    var lat = $(data).data('lat');
+////    var lng = $(data).data('lng');
+////    var id = $(data).data('idedo');
+//    var marcadores;
+//
+//    /*sirve para determinar el zoom que se le dará al Edo */
+//    var z = 0;
+//    if (id == 14) {
+//        z = 11;
+//    } else if (id == 15 || id == 11 || id == 22 || id == 31 || id == 26) {
+//        z = 9;
+//    } else if (id == 19 || id == 21 || id == 9) {
+//        z = 10;
+//    } else {
+//        z = 7;
+//    }
+//
+//    var map = new google.maps.Map(document.getElementById('mapa'), {
+//        zoom: 4,
+//        center: new google.maps.LatLng(lat, lng),
+//        mapTypeId: google.maps.MapTypeId.ROADMAP,
+//        zoom: z
+//    });
+//    var infowindow = new google.maps.InfoWindow();
+//    var marker, i;
+//
+//    var params = {"controller": "traeclinicas", "cveedo": id};
+//    $.ajax({
+//        type: "POST",
+//        data: params,
+//        dataType: "json",
+//        url: "controller.php",
+//        beforeSend: function () {
+//            //imagen de carga
+//            $("#resultado").html("<p align='center'><img width='80px' src='https://contractaciopublica.gencat.cat/images/loading.gif' /></p>");
+//        },
+//        success: function (response) {
+//            $("#resultado").empty();
+//            marcadores = response;
+//            var pinIcon = new google.maps.MarkerImage(
+//                    'images/Señaladores_Azul_c.png',
+//                    null, /* size is determined at runtime */
+//                    null, /* origin is 0,0 */
+//                    null, /* anchor is bottom center of the scaled image */
+//                    new google.maps.Size(20, 38)
+//                    );
+//            for (i = 0; i < marcadores.length; i++) {
+//                marker = new google.maps.Marker({
+//                    position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+//                    map: map,
+//                    title: marcadores[i][0],
+//                    icon: pinIcon,
+//                    //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
+//                    cursor: 'default',
+//                    draggable: false,
+//                    animation: google.maps.Animation.DROP
+//                });
+//                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+//                    return function () {
+//                        //alert(marcadores[i][3]);
+//                        //traeClinicasdemapa(marcadores[i][3]);
+//                        //traeclinic(marcadores[i][3]);
+//                        infowindow.setContent(marcadores[i][0]);
+//                        infowindow.open(map, marker);
+////                        window.setTimeout(function () {
+////                            map.panTo(marker.getPosition());
+////                        }, 3000);
+//                    }
+//                })(marker, i));
+////                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+////                    return function () {
+////                        alert('clinica');
+//////                        infowindow.setContent(marcadores[i][0]);
+//////                        infowindow.open(map, marker);
+////                        //zoom: 7;
+////                        //map.setZoom(7);
+////                    }
+////                })(marker, i));
+////                window.setTimeout(function () {
+////                    map.panTo(marker.getPosition());
+////                }, 3000);
+//
+////                marker.addListener('click', function () {
+////                    map.setZoom(8);
+////                    map.setCenter(marker.getPosition());
+////                });
+//            }
+//            var listItems = "";
+//            $("#clinica").prop("disabled", false);
+//            listItems += "<option value=''>--Selecciona Clinica--</option>";
+//            for (i = 0; i < marcadores.length; i++) {
+//                /*ahora llenamos la lista con las clinicas*/
+//                var res = marcadores[i][0].split(" ");
+//                if (typeof res[2] !== 'undefined') {
+//                    var resto = res[2];
+//                } else {
+//                    var resto = '';
+//                }
+//                listItems += "<option id='" + res[0] + "' value='" + res[0] + "'>" + res[1] + ' ' + resto + "</option>";
+//            }
+//            $("#clinica").html(listItems);
+//            //$('#estado').html(response).fadeIn();
+//        }
+//    });
+//}
 
 function traeclinic(data) {
     //alert(id);
@@ -370,25 +519,52 @@ function traeclinic(data) {
         success: function (response) {
             $("#resultado").empty();
             marcadores = response;
+            var pinIcon = new google.maps.MarkerImage(
+                    'images/Señaladores_Azul_c.png',
+                    null, /* size is determined at runtime */
+                    null, /* origin is 0,0 */
+                    null, /* anchor is bottom center of the scaled image */
+                    new google.maps.Size(20, 38)
+                    );
             for (i = 0; i < marcadores.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     map: map,
                     title: marcadores[i][0],
-                    //icon: 'https://www.dentalia.mx/templates/dentaliav2/img/clinica-dental-en-mexico-dentalia-logo.png',
+                    icon: pinIcon,
                     //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
                     cursor: 'default',
                     draggable: false,
                     animation: google.maps.Animation.DROP
                 });
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                     return function () {
                         infowindow.setContent(marcadores[i][0]);
                         infowindow.open(map, marker);
-                        //zoom: 7;
-                        //map.setZoom(7);
                     }
                 })(marker, i));
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+                        //var lng = marcadores[i][0].toString();
+                        var idc = marcadores[i][0].split(" ");
+                        /*se requiere enviar la clave de la clinica*/
+                        $("#clinica option[id=" + idc[0] + "]").attr("selected", true);
+                        //$("#estados option[id=" + marcadores[i][3] + "]").attr("selected", true);
+                        traeEspecialidad(idc[0]);
+                    }
+                })(marker, i));
+//                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+//                    return function () {
+//                        alert('clinica');
+////                        infowindow.setContent(marcadores[i][0]);
+////                        infowindow.open(map, marker);
+//                        //zoom: 7;
+//                        //map.setZoom(7);
+//                    }
+//                })(marker, i));
+//                window.setTimeout(function () {
+//                    map.panTo(marker.getPosition());
+//                }, 3000);
 
 //                marker.addListener('click', function () {
 //                    map.setZoom(8);
@@ -413,27 +589,6 @@ function traeclinic(data) {
         }
     });
 }
-
-
-//function cargaSelectEdos() {
-//    var params = {"controller": "edosselect"};
-//    $.ajax({
-//        type: "POST",
-//        data: params,
-//        dataType: "json",
-//        url: "controller.php",
-//        success: function (response)
-//        {
-//            $('#estado').html(response).fadeIn();
-//        }
-//    });
-//}
-
-
-
-
-
-
 
 function initialize() {
     var marcadores;
@@ -470,65 +625,53 @@ function initialize() {
         success: function (data) {
             $("#resultado").empty();
             marcadores = data;
+            var pinIcon = new google.maps.MarkerImage(
+                    'images/Señaladores_Azul_o.png',
+                    null, /* size is determined at runtime */
+                    null, /* origin is 0,0 */
+                    null, /* anchor is bottom center of the scaled image */
+                    new google.maps.Size(20, 38)
+                    );
             for (i = 0; i < marcadores.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     map: map,
                     //title: 'Pulsa aquí',
-                    //icon: 'https://www.dentalia.mx/templates/dentaliav2/img/clinica-dental-en-mexico-dentalia-logo.png',
+                    //icon: pinIcon,
                     //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
                     cursor: 'default',
                     draggable: false,
                     animation: google.maps.Animation.DROP
 
                 });
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+//                marker.addListener('click', function () {
+//                    traeclinic(marcadores[i][3]);
+//                });
+                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                     return function () {
                         infowindow.setContent(marcadores[i][0]);
                         infowindow.open(map, marker);
-
                     }
                 })(marker, i));
-//                map.addListener('center_changed', function () {
-//                    // 3 seconds after the center of the map has changed, pan back to the
-//                    // marker.
-//                    window.setTimeout(function () {
-//                        map.panTo(marker.getPosition());
-//                    }, 3000);
-//                });
-
-                marker.addListener('click', function () {
-                    map.setZoom(8);
-                    map.setCenter(marker.getPosition());
-                });
-
-
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function () {
+//                        infowindow.setContent(marcadores[i][0]);
+//                        infowindow.marcadores[i][2]open(map, marker);
+                        var lng = marcadores[i][2].toString();
+                        var ide = lng.split("-");
+                        /*se requiere enviar lat, lng y numero de estado*/
+                        /*le quito el guion porque en la otra funcion lo agrega nuevamente, ni hablar*/
+                        var datos = marcadores[i][1] + "-" + ide[1] + "-" + marcadores[i][3];
+                        //$("select[name$='product_type'] option:selected").attr("id")
+                        //('#estados option:selected').id(marcadores[i][3]);
+                        $("#estados option[id=" + marcadores[i][3] + "]").attr("selected", true);
+                        traeclinic(datos);
+                    }
+                })(marker, i));
             }
-            //cargaSelectEdos();
         }
     });
 
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-//function toggleBounce() {
-//    if (marker.getAnimation() !== null) {
-//        marker.setAnimation(null);
-//    } else {
-//        marker.setAnimation(google.maps.Animation.BOUNCE);
-//    }
-//}
-
-//var x = document.getElementById("mapa");
-//function getLocation() {
-//    if (navigator.geolocation) {
-//        navigator.geolocation.getCurrentPosition(showPosition);
-//    } else {
-//        x.innerHTML = "Geolocation is not supported by this browser.";
-//    }
-//}
-//function showPosition(position) {
-//    x.innerHTML = "Latitude: " + position.coords.latitude +
-//            "<br>Longitude: " + position.coords.longitude;
-//}

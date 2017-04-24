@@ -56,6 +56,7 @@ class agendamodel {
         curl_setopt($ch, CURLOPT_URL, $details_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $geoloc = json_decode(curl_exec($ch), true);
+        //var_dump($geoloc);
         return $geoloc;
     }
 

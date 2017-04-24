@@ -93,6 +93,10 @@ class mailer {
         $horaconc = $horaini . " a " . $horaend;
         $replacef = str_replace("{horario}", $horaconc, $replacefecha);
 
+//        $ruta = "webcal://" . $_SERVER["SERVER_NAME"] . "/parts/evento.ics";
+//        /* reemplazamos para el calendario */
+//        $replaceCal = str_replace("{ruta}", $ruta, $replacef);
+
         $final = str_replace("{dirclinic}", $datos['clidir'], $replacef);
 
 

@@ -16,18 +16,18 @@ switch ($_POST['controller']) {
         foreach ($rs["data"] as $number => $valor) {
             /* traigo el lat lng del estado */
             $lngalt = $model->apiMaps($valor["sttName"]);
-            $final[] = array($lngalt['results'][0]['address_components'][0]['long_name'], $lngalt['results'][0]['geometry']['location']['lat'], $lngalt['results'][0]['geometry']['location']['lng']);
+            $final[] = array($lngalt['results'][0]['address_components'][0]['long_name'], $lngalt['results'][0]['geometry']['location']['lat'], $lngalt['results'][0]['geometry']['location']['lng'], $number);
         }
         break;
     case 'edosmapsselect':
         $datos = '"request": "getStateList"';
         /* obtengo la lista de estados donde hay una clinica Dentalia */
         $rs = $model->apiDent($datos);
-        $final = '<option value="0">-- Seleccionar un Estado --</option>';
+        //$final .= '<option value="0">-- Seleccionar un Estado --</option>';
         foreach ($rs["data"] as $number => $valor) {
             /* traigo el lat lng del estado */
             $lngalt = $model->apiMaps($valor["sttName"]);
-            $final = '<option value="' . $lngalt['results'][0]['address_components'][0]['long_name'] . '">' . $lngalt['results'][0]['address_components'][0]['long_name'] . '</option>';
+            $final .= '<option value="' . $lngalt['results'][0]['address_components'][0]['long_name'] . '">' . $lngalt['results'][0]['address_components'][0]['long_name'] . '</option>';
         }
         break;
     case 'traeclinicas':
@@ -39,7 +39,7 @@ switch ($_POST['controller']) {
 //        die('que devuelve de clinic');
 
         foreach ($rs["data"]["cliList"] as $number => $valor) {
-            /* traigo el lat lng del estado */
+            /* traigo el lat lng de la clinica */
             $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
         }
         if ($claveedo == 9) {

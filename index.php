@@ -314,7 +314,7 @@ if (isset($_POST['horarios'])) {
     $datos = '"request": "getStateList"';
     $rs = $model->apiDent($datos);
 
-    //$list .= '<option>--Selecciona Estado--</option>';
+    $list .= '<option value="">--Selecciona Estado--</option>';
     foreach ($rs["data"] as $number => $valor) {
         /* traigo el lat lng del estado */
         $lngalt = $model->apiMaps($valor["sttName"]);
