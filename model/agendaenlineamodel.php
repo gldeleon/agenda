@@ -48,7 +48,8 @@ class agendamodel {
     }
 
     function apiMaps($city) {
-        $apikey = 'AIzaSyAwSft_DFI-xKHyAQ9WrLH3QXVQ0gd4jAY';
+        //$apikey = 'AIzaSyAwSft_DFI-xKHyAQ9WrLH3QXVQ0gd4jAY';
+        $apikey = 'AIzaSyDCYwVzhrxZkui4WPn7zZbzzg-_Dgl3KWc';
         $cityclean = str_replace(" ", "+", $city);
         $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $cityclean . "+mexico&sensor=false&key=" . $apikey . "";
         //echo $details_url;

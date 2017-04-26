@@ -106,9 +106,10 @@ if (isset($_POST['horarios'])) {
 //                                <input type="hidden" name="drname" id="drname" value="' . $dr . '"/>
 //                            <input type="hidden" name="drid" id="drid" value="' . $docID . '" />
 
-    $inputs = '<input type="hidden" name="cliid" id="cliid" value="' . $cliID . '" />
+    $inputs = '<div id="oculto"><input type="hidden" name="cliid" id="cliid" value="' . $cliID . '" />
                             <input type="hidden" name="trtid" id="trtid" value="' . $trtID . '" />
-                            <input type="hidden" name="fecha" id="fecha" value="' . $diaINI . '" />';
+                            <input type="hidden" name="fecha" id="fecha" value="' . $diaINI . '" />'
+            . '<input type="radio" name="selecth" class="horarios" value="" required="required" /></div>';
 //    echo $table;
 //    die('que pex');
     $formhorarios = file_get_contents('parts/horarios.html');
@@ -171,7 +172,8 @@ if (isset($_POST['horarios'])) {
     $times = explode("_", $_POST['horai']);
     $horaini = $times[0];
     $horaend = $times[1];
-    $dia = date("l");
+
+    $dia = date("l", strtotime($_POST['fecha']));
 
     if ($dia == "Monday")
         $dia = "Lunes";
@@ -184,11 +186,12 @@ if (isset($_POST['horarios'])) {
     if ($dia == "Friday")
         $dia = "Viernes";
     if ($dia == "Saturday")
-        $dia = "Sabado";
+        $dia = "Sábado";
     if ($dia == "Sunday")
         $dia = "Domingo";
 
-    $mes = date("F");
+    /* hacer explode para tomar mi fecha */
+    $mes = date("F", strtotime($_POST['fecha']));
 
     if ($mes == "January")
         $mes = "Enero";
@@ -214,8 +217,8 @@ if (isset($_POST['horarios'])) {
         $mes = "Noviembre";
     if ($mes == "December")
         $mes = "Diciembre";
-    $dia2 = date("d");
-    $ano = date("Y");
+    $dia2 = date("d", strtotime($_POST['fecha']));
+    $ano = date("Y", strtotime($_POST['fecha']));
     $hztl = '
 <form action = "index.php" method = "post">
 <b>Datos del Paciente:</b>
@@ -303,7 +306,8 @@ if (isset($_POST['horarios'])) {
         $master = file_get_contents('parts/master.html');
         $replace = str_replace("{contenido}", $confirma, $master);
     } else {
-        $confirma = "<div><h3>Ocurrió un error al guardar la cita, por favor comunicate al 01.800.003.3682</h3></div>";
+        $confirma = "<div><h3>Ocurrió un error al guardar la cita, por favor comunicate al 01.800.003.3682</h3></div>"
+                . "<center><a class='btn btn-info' href='index.php'>Volver al Inicio</a></center>";
         //$confirma = file_get_contents('parts/final.html');
         $master = file_get_contents('parts/master.html');
         $replace = str_replace("{contenido}", $confirma, $master);

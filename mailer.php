@@ -41,7 +41,7 @@ class mailer {
         $msj = file_get_contents('parts/mailer.html');
         $replacename = str_replace("{patname}", $nombre, $msj);
         $replaceclnic = str_replace("{nombreclinic}", $datos['cliname'], $replacename);
-        $dia = date("l");
+        $dia = date("l", strtotime($datos['fecha']));
 
         if ($dia == "Monday")
             $dia = "Lunes";
@@ -54,11 +54,11 @@ class mailer {
         if ($dia == "Friday")
             $dia = "Viernes";
         if ($dia == "Saturday")
-            $dia = "Sabado";
+            $dia = "Sábado";
         if ($dia == "Sunday")
             $dia = "Domingo";
 
-        $mes = date("F");
+        $mes = date("F", strtotime($datos['fecha']));
 
         if ($mes == "January")
             $mes = "Enero";
@@ -84,8 +84,8 @@ class mailer {
             $mes = "Noviembre";
         if ($mes == "December")
             $mes = "Diciembre";
-        $dia2 = date("d");
-        $ano = date("Y");
+        $dia2 = date("d", strtotime($datos['fecha']));
+        $ano = date("Y", strtotime($datos['fecha']));
         $replacefecha = str_replace("{fecha}", $dia . ", " . $dia2 . " de " . $mes . " de " . $ano, $replaceclnic);
         $hor = explode("-", $datos['horai']);
         $horaini = date('h:ia', strtotime($hor[0]));
