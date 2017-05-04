@@ -9,8 +9,8 @@
 class agendamodel {
 
     function apiDent($data) {
-        $api = 'miplan';
-        $llave = '47b787581d55919d52f89c17c2afef2c859fb150';
+        $api = '';
+        $llave = '';
         header('Content-Type: text/html; charset=UTF-8');
         ## URL dentalia
         //$url = 'https://api.dentalia.com.mx/index.php?api=' . $api;
@@ -48,8 +48,8 @@ class agendamodel {
     }
 
     function apiMaps($city) {
-        //$apikey = 'AIzaSyAwSft_DFI-xKHyAQ9WrLH3QXVQ0gd4jAY';
-        $apikey = 'AIzaSyDCYwVzhrxZkui4WPn7zZbzzg-_Dgl3KWc';
+        //$apikey = '-';
+        $apikey = '-';
         $cityclean = str_replace(" ", "+", $city);
         $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $cityclean . "+mexico&sensor=false&key=" . $apikey . "";
         //echo $details_url;
