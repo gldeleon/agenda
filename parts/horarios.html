@@ -1,14 +1,25 @@
 
 <div class="col-lg-12">
-    <h3>Selecciona el día y la hora</h3>
-
+    <div class="container">
+        <div class="row">
+            <ul class="breadcrumb">
+                <li class="completed"><a href="#">Inicio</a></li>
+                <li class="active"><a href="#">Horario</a></li>
+                <li class=""><a href="#">Identificación</a></li>
+                <li class=""><a href="#">Confirmación</a></li>
+                <li class=""><a href="#">Final</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-4">
+            <h3>Selecciona el horario de tu preferencia.</h3>
             <div id="datepicker"></div>
         </div>
         <form action="index.php" method="post">
             <div class="col-lg-8">
                 <div class="col-lg-12">
+                    <h3>Horarios de la Clinica <b>{nombreclinica}</b></h3>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4>Horarios Disponibles en la fecha <span id="fechahorarios"></span></h4>

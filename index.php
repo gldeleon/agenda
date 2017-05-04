@@ -11,9 +11,14 @@ if (isset($_POST['horarios'])) {
     $cliID = $_POST['clinica'];
     $trtID = $_POST['tratamiento'];
     $diaINI = date('Y-m-d');
-    //die($diaINI);
+    $nombreclinica = $_POST['nombreclinica'];
+    /* traer si la clinica es SDI */
+//    $req = '"request":"getClinicType", "cliID": "' . $cliID . '"';
+//    $len = $model->apiDent($req);
+//    var_dump($len);
+//    die('que devuelve');
     $diaEND = date('Y-m-d');
-    $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '" ,"iniDate": "' . $diaINI . '","endDate": "' . $diaEND . '",  "trtID":"' . $trtID . '"';
+    $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '" ,"iniDate": "' . $diaINI . '","endDate": "' . $diaEND . '",  "trtID":"' . $trtID . '", "len":"30"';
     //$datos = '"request": "getSchedule", "cliID": ' . $cliID . ' ,"iniDate": "' . $diaINI . '","endDate": "' . $diaEND . '",  "trtID":"' . $trtID . '"';
     //echo $datos;
     $rs = $model->apiDent($datos);
@@ -115,8 +120,11 @@ if (isset($_POST['horarios'])) {
     $formhorarios = file_get_contents('parts/horarios.html');
     $armamoshorarios = str_replace('{tabla}', $table, $formhorarios);
     $cargamosdatos = str_replace('{datos}', $inputs, $armamoshorarios);
+
+    $nombreclinic = str_replace('{nombreclinica}', $nombreclinica, $cargamosdatos);
+
     $master = file_get_contents('parts/master.html');
-    $replace = str_replace("{contenido}", $cargamosdatos, $master);
+    $replace = str_replace("{contenido}", $nombreclinic, $master);
 } else if (isset($_POST['identificacion'])) {
 
     //var_dump($_POST);
@@ -299,12 +307,11 @@ if (isset($_POST['horarios'])) {
     //echo iconv('ISO-8859-2', 'UTF-8', strftime(%A, %d de %B de %Y", strtotime($row['date'])));
     //echo iconv('ISO-8859-2', 'UTF-8', strftime(date('l jS \of F Y', strtotime($_POST['fecha']))));
 
-
-    if ($rs["error"] == "") {
-        $mailer->enviamail($_POST);
+    if ($rs['data']['apptID'] != "" && $rs["error"] == "") {
         $confirma = file_get_contents('parts/final.html');
         $master = file_get_contents('parts/master.html');
         $replace = str_replace("{contenido}", $confirma, $master);
+        $mailer->enviamail($_POST);
     } else {
         $confirma = "<div><h3>Ocurrió un error al guardar la cita, por favor comunicate al 01.800.003.3682</h3></div>"
                 . "<center><a class='btn btn-info' href='index.php'>Volver al Inicio</a></center>";

@@ -8,17 +8,35 @@ $(document).ready(function () {
         if (edoid !== "") {
             traeclinic(edoid);
         } else {
-            alert('Debes seleccionar un estado');
+            //alert('Debes seleccionar un estado');
+            var listItems = "<option value=''>--Selecciona Clinica--</option>";
+            $("#clinica").html(listItems);
+            initialize();
         }
 
     });
 
     $("#clinica").change(function () {
         var cliid = $("#clinica option:selected").val();
+        //alert(cliid);
         if (cliid !== "") {
+            var sp = $("#clinica option:selected").attr('id');
+            //alert(sp);
+            var rs = sp.split(',');
+            if (typeof rs[3] !== 'undefined') {
+                var final = rs[1] + " " + rs[2] + " " + rs[3];
+            } else if (typeof rs[2] !== 'undefined') {
+                var final = rs[1] + " " + rs[2];
+            } else {
+                var final = rs[1];
+            }
+            //alert(final);
+            $('#nombreclinica').val(final);
             traeEspecialidad(cliid);
         } else {
-            alert('Debes seleccionar una clinica');
+            /*traigo el id del estado, seleccionado anteriormente*/
+            var edoid = $("#estados").val();
+            traeclinic(edoid);
         }
     });
 
@@ -111,22 +129,39 @@ function traeEspecialidad(datos) {
                     new google.maps.Size(20, 38)
                     );
             for (i = 0; i < marcadores.length; i++) {
+                var contentString = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        '</div>' +
+                        '<h3 id="firstHeading" class="firstHeading">DENTALIA ' + marcadores[0][0] + '</h3>' +
+                        '<div id="bodyContent">' +
+                        '<p>' + marcadores[0][4] + '.</p>' +
+//                        '<p><a href="https://www.dentalia.mx/clinicas-dentales/" target="_blank">DENTALIA: ' + marcadores[0][0] + '</a>' +
+                        '</div>' +
+                        '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 200
+                });
+
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     map: map,
-                    title: marcadores[i][0],
+                    title: marcadores[0][0],
                     icon: pinIcon,
                     //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
                     cursor: 'default',
                     draggable: false,
                     animation: google.maps.Animation.DROP
                 });
-                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(marcadores[i][0]);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
+                infowindow.open(map, marker);
+//                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+//                    return function () {
+////                        infowindow.setContent(marcadores[i][0]);
+////                        infowindow.open(map, marker);
+//                        infowindow.open(map, marker);
+//                    }
+//                })(marker, i));
             }
         }
     });
@@ -207,8 +242,22 @@ function traeclinic(data) {
                     return function () {
                         //var lng = marcadores[i][0].toString();
                         var idc = marcadores[i][0].split(" ");
+                        //alert(idc);
                         /*se requiere enviar la clave de la clinica*/
-                        $("#clinica option[id=" + idc[0] + "]").attr("selected", true);
+                        $("#clinica option[id='" + idc.toString() + "']").attr("selected", true);
+                        var idclinic = idc.toString();
+                        var rs = idclinic.split(',');
+                        //alert(rs);
+                        if (typeof rs[3] !== 'undefined') {
+                            var final = rs[1] + " " + rs[2] + " " + rs[3];
+                        } else if (typeof rs[2] !== 'undefined') {
+                            var final = rs[1] + " " + rs[2];
+                        } else {
+                            var final = rs[1];
+                        }
+                        //alert(final);
+                        $('#nombreclinica').val(final);
+                        /*actualizamos el input*/
                         //$("#estados option[id=" + marcadores[i][3] + "]").attr("selected", true);
                         traeEspecialidad(idc[0]);
                     }
@@ -237,12 +286,20 @@ function traeclinic(data) {
             for (i = 0; i < marcadores.length; i++) {
                 /*ahora llenamos la lista con las clinicas*/
                 var res = marcadores[i][0].split(" ");
-                if (typeof res[2] !== 'undefined') {
-                    var resto = res[2];
+                if (typeof res[3] !== 'undefined') {
+                    var final = res[1] + " " + res[2] + " " + res[3];
+                } else if (typeof res[2] !== 'undefined') {
+                    var final = res[1] + " " + res[2];
                 } else {
-                    var resto = '';
+                    var final = res[1];
                 }
-                listItems += "<option id='" + res[0] + "' value='" + res[0] + "'>" + res[1] + ' ' + resto + "</option>";
+
+//                if (typeof res[2] !== 'undefined') {
+//                    var resto = res[2];
+//                } else {
+//                    var resto = '';
+//                }
+                listItems += "<option id='" + res + "' value='" + res[0] + "'>" + final + "</option>";
             }
             $("#clinica").html(listItems);
             //$('#estado').html(response).fadeIn();
@@ -293,10 +350,15 @@ function initialize() {
                     new google.maps.Size(20, 38)
                     );
             for (i = 0; i < marcadores.length; i++) {
+
+//                marker.addListener('click', function () {
+//                    traeclinic(marcadores[i][3]);
+//                });
+
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     map: map,
-                    //title: 'Pulsa aquí',
+                    //title: clinic[1],
                     //icon: pinIcon,
                     //icon: 'https://www.dentalia.mx/templates/dentaliav2/favicon.ico',
                     cursor: 'default',
@@ -304,12 +366,18 @@ function initialize() {
                     animation: google.maps.Animation.DROP
 
                 });
-//                marker.addListener('click', function () {
-//                    traeclinic(marcadores[i][3]);
-//                });
+
                 google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                     return function () {
-                        infowindow.setContent(marcadores[i][0]);
+                        var nombre = '';
+                        if (marcadores[i][0] == 'Mexico City') {
+                            nombre = 'Ciudad de México';
+                        } else if (marcadores[i][0] == 'State of Mexico') {
+                            nombre = 'Estado de México';
+                        } else {
+                            nombre = marcadores[i][0];
+                        }
+                        infowindow.setContent(nombre);
                         infowindow.open(map, marker);
                     }
                 })(marker, i));
@@ -317,6 +385,11 @@ function initialize() {
                     return function () {
 //                        infowindow.setContent(marcadores[i][0]);
 //                        infowindow.marcadores[i][2]open(map, marker);
+
+                        /*colocamos el estado seleccionado*/
+                        var idc = marcadores[i][0].split(" ");
+                        $("#estados option[id='" + idc.toString() + "']").attr("selected", true);
+
                         var lng = marcadores[i][2].toString();
                         var ide = lng.split("-");
                         /*se requiere enviar lat, lng y numero de estado*/
