@@ -106,7 +106,8 @@ switch ($_POST['controller']) {
         $diaINI = $_POST['fecha'];
         $diaEND = $_POST['fecha'];
 
-        $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '", "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '", "len":"30"';
+
+        $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '", "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '", "len":"60"';
         //$datos = '"request": "getSchedule", "cliID": ' . $cliID . ', "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '"';
         //echo $datos;
         $rs = $model->apiDent($datos);
@@ -165,16 +166,23 @@ switch ($_POST['controller']) {
                 if ($poshorario !== false) {
                     foreach ($valor as $horas) {
                         $nuevaHora = strtotime('+' . $lapso . ' minutes', strtotime($horas));
-                        $hfinal = date('H:i:s', $nuevaHora);
-                        if ($hfinal < $ultimahora) {
-                            //<td>' . date('h:ia', strtotime($horas)) . " - " . date("h:ia", strtotime($hfinal)) . '</td>
-                            $final .= '<tr>
+                        $final .= '<tr>
                                         <td>' . date('h:ia', strtotime($horas)) . '</td>
                                         <td><center>' . $lapso . ' min<center></td>
                                         <td>' . $dr . '</td>
                                         <td><center><input name="selecth" class="horarios" value="' . $horas . "_" . $hfinal . "-" . $silla . "-" . $dr . "-" . $docID . '" type="radio" required="required"/></center></td>
                                     </tr>';
-                        }
+//                        $nuevaHora = strtotime('+' . $lapso . ' minutes', strtotime($horas));
+//                        $hfinal = date('H:i:s', $nuevaHora);
+//                        if ($hfinal < $ultimahora) {
+//                            //<td>' . date('h:ia', strtotime($horas)) . " - " . date("h:ia", strtotime($hfinal)) . '</td>
+//                            $final .= '<tr>
+//                                        <td>' . date('h:ia', strtotime($horas)) . '</td>
+//                                        <td><center>' . $lapso . ' min<center></td>
+//                                        <td>' . $dr . '</td>
+//                                        <td><center><input name="selecth" class="horarios" value="' . $horas . "_" . $hfinal . "-" . $silla . "-" . $dr . "-" . $docID . '" type="radio" required="required"/></center></td>
+//                                    </tr>';
+//                        }
                     }
                 }
             }
