@@ -1,4 +1,15 @@
 <div class="col-lg-12">
+    <div class="container">
+        <div class="row">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">Inicio</a></li>
+                <li class=""><a href="#">Horario</a></li>
+                <li class=""><a href="#">Identificación</a></li>
+                <li class=""><a href="#">Confirmación</a></li>
+                <li class=""><a href="#">Final</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="col-lg-4">
         <form action="index.php" method="post" id="fomularioclinicas">
             <!--        <form id="fomularioclinicas">-->
@@ -11,7 +22,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <!--                <br /><br /><br /><br /><br /><br />-->
                 <label for="clinica">Clínica: </label>
                 <select class="form-control" name="clinica" id="clinica" required="required">
                     <option value="">--Selecciona Clinica--</option>
@@ -30,6 +40,7 @@
                 </select>
             </div>
             <input type="hidden" name="horarios" value="horarios" />
+            <input type="hidden" name="nombreclinica" id="nombreclinica" value="" />
             <input id="formmapa" class="btn btn-info" type="submit" value="Siguiente" />
         </form>
         <br />
@@ -43,3 +54,13 @@
     <script src="/js/jquery.js"></script>
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDCYwVzhrxZkui4WPn7zZbzzg-_Dgl3KWc"></script>
     <script type="text/javascript" src="/js/functionsmaps.js"></script>
+    <!-- Agenda cita Niños -->
+    <script type="text/javascript">
+        var axel = Math.random() + "";
+        var a = axel * 10000000000000;
+        document.write('<iframe src="https://5880473.fls.doubleclick.net/activityi;src=5880473;type=invmedia;cat=yhtpmun5;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+    </script>
+    <noscript>
+    <iframe src="https://5880473.fls.doubleclick.net/activityi;src=5880473;type=invmedia;cat=yhtpmun5;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+    </noscript>
+    <!-- End of DoubleClick Floodlight Tag: Please do not remove -->

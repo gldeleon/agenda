@@ -35,30 +35,28 @@ switch ($_POST['controller']) {
         $datos = '"request": "getCliList", "sttID": "' . $claveedo . '"';
         //'sttID': Integer no trae direcciones de clinicas
         $rs = $model->apiDent($datos);
-//        var_dump($rs);
-//        die('que devuelve de clinic');
 
         foreach ($rs["data"]["cliList"] as $number => $valor) {
-            /* traigo el lat lng de la clinica */
-            $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
-        }
-        if ($claveedo == 9) {
-            $datos = '"request": "getCliList", "sttID": "' . 15 . '"';
-            $rs = $model->apiDent($datos);
-//        var_dump($rs);
-//        die('que devuelve de clinic');
-
-            foreach ($rs["data"]["cliList"] as $number => $valor) {
-                /* traigo el lat lng del estado */
-                if ($valor["cliID"] != 21) {
-                    $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
-                }
+            /* traigo el lat lng de la clinica, excluir las clinicas de prueba */
+            if (!strpos(strtolower($valor["cliName"]), 'prueba')) {
+                $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
             }
         }
 
-        //var_dump($rs->data->cliList);
-        //var_dump($final);
-        //die('como lo regresa');
+        if ($claveedo == 9) {
+            $datos = '"request": "getCliList", "sttID": "' . 15 . '"';
+            $rs = $model->apiDent($datos);
+
+            foreach ($rs["data"]["cliList"] as $number => $valor) {
+                /* traigo el lat lng del estado, excliyendo la clinica que está en toluca, solo se agregan las de los suburbios :) */
+                if ($valor["cliID"] != 21) {
+                    if (!strpos(strtolower($valor["cliName"]), 'prueba')) {
+                        $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
+                    }
+                    //       $final[] = array($valor["cliID"] . ' ' . $valor["cliName"], $valor["cliLat"], $valor["cliLng"]);
+                }
+            }
+        }
         break;
     case 'especialidades':
         $datos = '"request": "getSpcList"';
@@ -107,7 +105,8 @@ switch ($_POST['controller']) {
         $trtID = $_POST['trtid'];
         $diaINI = $_POST['fecha'];
         $diaEND = $_POST['fecha'];
-        $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '", "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '"';
+
+        $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '", "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '", "len":"60"';
         //$datos = '"request": "getSchedule", "cliID": ' . $cliID . ', "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '"';
         //echo $datos;
         $rs = $model->apiDent($datos);
@@ -166,16 +165,23 @@ switch ($_POST['controller']) {
                 if ($poshorario !== false) {
                     foreach ($valor as $horas) {
                         $nuevaHora = strtotime('+' . $lapso . ' minutes', strtotime($horas));
-                        $hfinal = date('H:i:s', $nuevaHora);
-                        if ($hfinal < $ultimahora) {
-                            //<td>' . date('h:ia', strtotime($horas)) . " - " . date("h:ia", strtotime($hfinal)) . '</td>
-                            $final .= '<tr>
+                        $final .= '<tr>
                                         <td>' . date('h:ia', strtotime($horas)) . '</td>
                                         <td><center>' . $lapso . ' min<center></td>
                                         <td>' . $dr . '</td>
                                         <td><center><input name="selecth" class="horarios" value="' . $horas . "_" . $hfinal . "-" . $silla . "-" . $dr . "-" . $docID . '" type="radio" required="required"/></center></td>
                                     </tr>';
-                        }
+//                        $nuevaHora = strtotime('+' . $lapso . ' minutes', strtotime($horas));
+//                        $hfinal = date('H:i:s', $nuevaHora);
+//                        if ($hfinal < $ultimahora) {
+//                            //<td>' . date('h:ia', strtotime($horas)) . " - " . date("h:ia", strtotime($hfinal)) . '</td>
+//                            $final .= '<tr>
+//                                        <td>' . date('h:ia', strtotime($horas)) . '</td>
+//                                        <td><center>' . $lapso . ' min<center></td>
+//                                        <td>' . $dr . '</td>
+//                                        <td><center><input name="selecth" class="horarios" value="' . $horas . "_" . $hfinal . "-" . $silla . "-" . $dr . "-" . $docID . '" type="radio" required="required"/></center></td>
+//                                    </tr>';
+//                        }
                     }
                 }
             }

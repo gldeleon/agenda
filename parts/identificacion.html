@@ -1,5 +1,16 @@
 
 <div class="col-lg-12">
+    <div class="container">
+        <div class="row">
+            <ul class="breadcrumb">
+                <li class="completed"><a href="#">Inicio</a></li>
+                <li class="completed"><a href="#">Horario</a></li>
+                <li class="active"><a href="#">Identificación</a></li>
+                <li class=""><a href="#">Confirmación</a></li>
+                <li class=""><a href="#">Final</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="row">
         <h3>Identificación</h3>
         <div class="col-lg-6">
@@ -32,17 +43,12 @@
                             Femenino
                         </label>
                     </div>
-                    <div class="form-check disabled">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="genero" id="optionsRadios3" value="otro" required="required" />
-                            Otro
-                        </label>
-                    </div>
                 </fieldset>
                 <div class="form-group">
                     <label for="fnac">Fecha de Nacimiento:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="datepickerform" id="datepickerform" aria-describedby="fnac" placeholder="Fecha de Nacimiento" required="required" />
+                        <!--                        <div class="input-append date" id="dpYears" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">-->
+                        <input type="text" class="form-control input-append date" name="datepickerform" id="datepickerform" aria-describedby="fnac" placeholder="Fecha de Nacimiento" required="required" />
                         <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                     </div>
                     <!--<div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>-->
@@ -50,13 +56,23 @@
                 </div>
                 <div class="form-group">
                     <label for="tel">Teléfono:</label>
-                    <input type="text" class="form-control" name="tel" id="tel" onkeypress='validate(event)' aria-describedby="fnac" placeholder="Telefono para confirmar tu cita, sin espacios ni guiones" maxlength="10" required="required" />
+                    <input type="text" class="form-control" name="tel" id="tel" onkeypress='validate(event)' aria-describedby="fnac" placeholder="Teléfono, para confirmar tu cita, sin espacios ni guiones" maxlength="10" required="required" />
                     <!--                <small id="nombre" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
                 </div>
                 <div class="form-group">
                     <label for="mail">Correo:</label>
-                    <input type="text" class="form-control" name="mail" id="mail" aria-describedby="fnac" placeholder="Correo" required="required" />
+                    <input type="text" class="form-control" name="mail" id="mail" aria-describedby="fnac" placeholder="Correo, se utilizará para confirmar tu cita" required="required" />
                     <!--                <small id="nombre" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input name="aviso" id="aviso" type="checkbox" required="required" /> <a href="https://www.dentalia.mx/politicas-de-privacidad" target="_blank" > Aviso de Privacidad </a>
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input name="deseo" id="deseo" type="checkbox" /> Deseo recibir tips para mejorar mi sonrisa y salud bucal
+                    </label>
                 </div>
                 {inputs}
                 <input type="hidden" name="confirmacion">
@@ -69,3 +85,19 @@
         </div>
     </div>
 </div>
+<!--
+Start of DoubleClick Floodlight Tag: Please do not remove
+Activity name of this tag: Dentalia - Paso Identificación
+URL of the webpage where the tag is expected to be placed: http://www.dentalia.mx
+This tag must be placed between the <body> and </body> tags, as close as possible to the opening tag.
+Creation Date: 05/08/2017
+-->
+<script type="text/javascript">
+    var axel = Math.random() + "";
+    var a = axel * 10000000000000;
+    document.write('<iframe src="https://5880473.fls.doubleclick.net/activityi;src=5880473;type=invmedia;cat=3sfbylwp;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+</script>
+<noscript>
+<iframe src="https://5880473.fls.doubleclick.net/activityi;src=5880473;type=invmedia;cat=3sfbylwp;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+</noscript>
+<!-- End of DoubleClick Floodlight Tag: Please do not remove -->

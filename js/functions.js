@@ -3,11 +3,12 @@
 $(document).ready(function () {
 
     $('#table-horarios').DataTable({
+        //"jQueryUI": true,
         "language": {
             "lengthMenu": "Mostrando _MENU_ resultados por página",
-            "zeroRecords": "NO HAY CITAS DISPONIBLES EN ESTA FECHA",
+            "zeroRecords": "NO HAY HORARIOS DISPONIBLES EN ESTA FECHA",
             "info": "Página _PAGE_ de _PAGES_",
-            "infoEmpty": "NO HAY CITAS DISPONIBLES EN ESTA FECHA",
+            "infoEmpty": "...",
             "infoFiltered": "(filtrado de _MAX_ resultados totales)",
             "search": "Buscar",
             "paginate": {
@@ -18,17 +19,20 @@ $(document).ready(function () {
             }
         },
         "responsive": true,
-        "bLengthChange": false,
+        "bLengthChange": true,
         "pageLength": 10,
         "bDestroy": true
     });
 
     $('#datepickerform').datetimepicker({
+        startView: 'decade',
         format: 'yyyy-mm-dd',
         minView: 2,
         maxView: 4,
         language: 'es',
-        weekStart: 1,
+        //weekStart: 1,
+        //endDate: 'today',
+        endDate: '+0d',
         forceParse: 0,
         autoclose: true,
         changeMonth: true,
@@ -37,10 +41,6 @@ $(document).ready(function () {
         selectOtherMonths: true
     });
 });
-
-//function traeClinicasdemapa(edoid) {
-//    traeclinic(edoid);
-//}
 
 function validate(evt) {
     var theEvent = evt || window.event;
@@ -66,7 +66,6 @@ $(function () {
         dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
         dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
         weekHeader: 'Sm',
-        //format: 'yyyy-mm-dd',
         firstDay: 1,
         isRTL: false,
         showMonthAfterYear: false,
@@ -103,13 +102,15 @@ $(function () {
                         $(".table-responsive").empty();
                         $(".table-responsive").html(response);
                         $('#table-horarios1').DataTable({
+                            //"jQueryUI": true,
                             "language": {
                                 "lengthMenu": "Mostrando _MENU_ resultados por página",
-                                "zeroRecords": "NO HAY CITAS DISPONIBLES EN ESTA FECHA",
+                                "zeroRecords": "NO HAY HORARIOS DISPONIBLES EN ESTA FECHA",
                                 "info": "Página _PAGE_ de _PAGES_",
-                                "infoEmpty": "NO HAY CITAS DISPONIBLES EN ESTA FECHA",
+                                "infoEmpty": "...",
                                 "infoFiltered": "(filtrado de _MAX_ resultados totales)",
                                 "search": "Buscar",
+                                "jQueryUI": "true",
                                 "paginate": {
                                     "first": "Primero",
                                     "last": "Ultimo",
@@ -118,7 +119,7 @@ $(function () {
                                 }
                             },
                             "responsive": true,
-                            "bLengthChange": false,
+                            "bLengthChange": true,
                             "pageLength": 10,
                             "bDestroy": true
                         });
