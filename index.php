@@ -306,7 +306,7 @@ if (isset($_POST['horarios'])) {
     //echo iconv('ISO-8859-2', 'UTF-8', strftime("%d de %B de %Y", strtotime($_POST['fecha'])));
     //echo iconv('ISO-8859-2', 'UTF-8', strftime(%A, %d de %B de %Y", strtotime($row['date'])));
     //echo iconv('ISO-8859-2', 'UTF-8', strftime(date('l jS \of F Y', strtotime($_POST['fecha']))));
-//    var_dump($rs);
+
     if ($rs['data']['apptID'] != "" && $rs["error"] == "") {
         $confirma = file_get_contents('parts/final.html');
         $master = file_get_contents('parts/master.html');

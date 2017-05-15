@@ -106,6 +106,7 @@ switch ($_POST['controller']) {
         $diaINI = $_POST['fecha'];
         $diaEND = $_POST['fecha'];
 
+
         $datos = '"request": "getFreeHoursByTrt", "cliID": "' . $cliID . '", "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '", "len":"60"';
         //$datos = '"request": "getSchedule", "cliID": ' . $cliID . ', "iniDate": "' . $diaINI . '", "endDate": "' . $diaEND . '", "trtID":"' . $trtID . '"';
         //echo $datos;
