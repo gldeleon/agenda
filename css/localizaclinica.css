@@ -143,3 +143,14 @@ div.ui-datepicker{
     left: 100%;
     z-index: 2;
 }
+/*.ui-datepicker {
+    background: #005983;
+    border: 1px solid #555;
+    color: #EEE;
+}*/
+
+.panel-default > .panel-heading {
+    color: #333;
+    background: #deedf7 url("images/ui-bg_highlight-soft_100_deedf7_1x100.png") 50% 50% repeat-x;
+    border-color: #ddd;
+}
